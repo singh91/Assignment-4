@@ -40,4 +40,34 @@ public class newServlet {
 
     }
 
+    @GET
+    @Path("{id}")
+    @Produces("application/json")
+    public Response getById(@PathParam("id") String id) {
+
+        return Response.ok(getResult("SELECT * FROM product WHERE productID=?", String.valueOf(id))).build();
+
+        // return Response.entity(getResult("SELECT * FROM product")).build();
+    }
+
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response add(JsonObject json) {
+
+        String name = json.getString("name");
+        String description = json.getString("description");
+        String quantity = String.valueOf(json.getInt("quantity"));
+
+        System.out.println(name + '\t' + description + '\t' + quantity);
+
+        int result = doUpdate("INSERT INTO product (name,description,quantity) VALUES (?,?,?)", name, description, quantity);
+        if (result <= 0) {
+            return Response.status(500).build();
+        } else {
+            return Response.ok(json).build();
+        }
+    }
+
+    
 }
