@@ -69,5 +69,25 @@ public class newServlet {
         }
     }
 
+    @PUT
+    @Path("{id}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response updateData(@PathParam("id") String id, JsonObject json) {
+
+        String name = json.getString("name");
+        String description = json.getString("description");
+        String quantity = String.valueOf(json.getInt("quantity"));
+
+        System.out.println(name + '\t' + description + '\t' + quantity +'\t'+ id);
+
+        int result = doUpdate("UPDATE product SET name=?,description=?,quantity=? where productID=?", name, description, quantity, String.valueOf(id));
+        if (result <= 0) {
+            return Response.status(500).build();
+        } else {
+            return Response.ok(json).build();
+        }
+    }
+
     
 }
