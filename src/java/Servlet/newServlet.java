@@ -189,5 +189,18 @@ public class newServlet {
         return sb.toString();
     }
 
+    private int doUpdate(String query, String... parameter) {
+        int change = 0;
+        try (Connection conn = DBConnect.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            for (int i = 1; i <= parameter.length; i++) {
+                pstmt.setString(i, parameter[i - 1]);
+            }
+            change = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(newServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return change;
+    }
 
 }
