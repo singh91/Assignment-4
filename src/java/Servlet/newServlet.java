@@ -105,6 +105,89 @@ public class newServlet {
         // return Response.entity(getResult("SELECT * FROM product")).build();
 
     }
+//    
+//
+//    @Override
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+//        Set<String> key = request.getParameterMap().keySet();
+//        try (PrintWriter out = response.getWriter()) {
+//            if (key.contains("name") && key.contains("description") && key.contains("quantity")) {
+//                String name = request.getParameter("name");
+//                String desc = request.getParameter("description");
+//                String quant = request.getParameter("quantity");
+//
+//                doUpdate("INSERT INTO product (name,description,quantity) VALUES (?,?,?)", name, desc, quant);
+//                out.println("http://localhost:8080/NutsAndBolts/products?id="+doUpdate("SELECT LAST_INSERT_ID()"));
+//            } else {
+//                response.setStatus(500);
+//            }
+//        } catch (IOException ex) {
+//            Logger.getLogger(newServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//
+//    @Override
+//    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
+//        Set<String> key = request.getParameterMap().keySet();
+//        try (PrintWriter out = response.getWriter()) {
+//            if (key.contains("productID") && key.contains("name") && key.contains("description") && key.contains("quantity")) {
+//                String id = request.getParameter("productID");
+//                String name = request.getParameter("name");
+//                String desc = request.getParameter("description");
+//                String quant = request.getParameter("quantity");
+//
+//                doUpdate("UPDATE product SET name=?,description=?,quantity=? where productID=? ", name, desc, quant, id);
+//                out.println("http://localhost:8080/NutsAndBolts/products?id=" + id);
+//            } else {
+//                response.setStatus(500);
+//            }
+//        } catch (IOException ex) {
+//            Logger.getLogger(newServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//
+//    @Override
+//    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
+//        Set<String> key = request.getParameterMap().keySet();
+//        try (PrintWriter out = response.getWriter()) {
+//            if (key.contains("productID")) {
+//                String id = request.getParameter("productID");
+//
+//                doUpdate("DELETE FROM product where productID=? ", id);
+//
+//            } else {
+//                response.setStatus(500);
+//            }
+//        } catch (IOException ex) {
+//            Logger.getLogger(newServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+
+    public String getResult(String query, String... parameter) {
+        StringBuilder sb = new StringBuilder();
+        JSONObject obj = new JSONObject();
+
+        try (Connection conn = DBConnect.getConnection()) {
+            PreparedStatement pst = conn.prepareStatement(query);
+            for (int i = 1; i <= parameter.length; i++) {
+                pst.setString(i, parameter[i - 1]);
+            }
+            System.out.println(parameter.length);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                obj.put("productID", rs.getInt("productID"));
+                obj.put("name", rs.getString("name"));
+                obj.put("description", rs.getString("description"));
+                obj.put("quantity", rs.getInt("quantity"));
+                sb.append(obj.toJSONString());
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        return sb.toString();
+    }
 
 
 }
