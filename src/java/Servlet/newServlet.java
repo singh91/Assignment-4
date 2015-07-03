@@ -89,5 +89,22 @@ public class newServlet {
         }
     }
 
-    
+    @DELETE
+    @Path("{id}")
+    @Produces("application/json")
+
+    public Response deleteById(@PathParam("id") String id) {
+
+        int result = doUpdate("DELETE FROM product where productID=? ", String.valueOf(id));
+
+        if (result <= 0) {
+            return Response.status(500).build();
+        } else {
+            return Response.ok().build();
+        }
+        // return Response.entity(getResult("SELECT * FROM product")).build();
+
+    }
+
+
 }
