@@ -117,7 +117,7 @@ public class newServlet {
 //                String quant = request.getParameter("quantity");
 //
 //                doUpdate("INSERT INTO product (name,description,quantity) VALUES (?,?,?)", name, desc, quant);
-//                out.println("http://localhost:8080/NutsAndBolts/products?id="+doUpdate("SELECT LAST_INSERT_ID()"));
+//                out.println("http://localhost:8080/Assignment4/products?id="+doUpdate("SELECT LAST_INSERT_ID()"));
 //            } else {
 //                response.setStatus(500);
 //            }
@@ -137,7 +137,7 @@ public class newServlet {
 //                String quant = request.getParameter("quantity");
 //
 //                doUpdate("UPDATE product SET name=?,description=?,quantity=? where productID=? ", name, desc, quant, id);
-//                out.println("http://localhost:8080/NutsAndBolts/products?id=" + id);
+//                out.println("http://localhost:8080/Assignment4/products?id=" + id);
 //            } else {
 //                response.setStatus(500);
 //            }
