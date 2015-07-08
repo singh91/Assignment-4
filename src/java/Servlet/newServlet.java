@@ -26,7 +26,7 @@ import org.json.simple.JSONObject;
 
 /**
  *
- * @author c0633648
+ * @author c0655613
  */
 @Path("/products")
 public class newServlet {

@@ -11,7 +11,7 @@ import javax.ws.rs.core.Application;
 
 /**
  *
- * @author c0633648
+ * @author c0655613
  */
 @javax.ws.rs.ApplicationPath("restfull")
 public class ApplicationConfig extends Application {
